@@ -1,0 +1,12 @@
+#ifndef LWCSF_LICENSE_SIMPLIFIED_BSD
+#define LWCSF_LICENSE_SIMPLIFIED_BSD
+
+namespace LWCSF {
+namespace License {
+namespace Simplified {
+
+struct BSD { static char TEXT[]; };
+
+}}} // LWCSF::License::Simplified
+
+#endif // LWCSF_LICENSE_SIMPLIFIED_BSD

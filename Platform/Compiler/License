@@ -1,0 +1,15 @@
+#ifndef CSHIFT_PLATFORM_Compiler_LICENSE
+#define CSHIFT_PLATFORM_OS_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "Platform/License"
+
+namespace Platform {
+namespace Compiler {
+namespace License {
+
+struct License : Platform::License {};
+
+}}} // Platform::Compiler::License
+
+#endif // CSHIFT_PLATFORM_OS_LICENSE

@@ -1,0 +1,11 @@
+#ifndef LWCSF_LICENSE_GPL
+#define LWCSF_LICENSE_GPL
+
+namespace LWCSF {
+namespace License {
+
+struct GPL { static char URI[]; };
+
+}} // LWCSF::License
+
+#endif // LWCSF_LICENSE_GPL

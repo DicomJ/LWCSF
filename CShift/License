@@ -1,0 +1,15 @@
+#ifndef CSHIFT_LICENSE
+#define CSHIFT_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "License/GPL"
+#include "License/Simplified/BSD"
+
+
+namespace CShift {
+
+struct License : LWCSF::License::GPL, LWCSF::License::Simplified::BSD {};
+
+} // CShift
+
+#endif // CSHIFT_LICENSE

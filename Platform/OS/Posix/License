@@ -1,0 +1,16 @@
+#ifndef LWCSF_CSHIFT_PLATFORM_OS_LICENSE
+#define LWCSF_CSHIFT_PLATFORM_OS_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "Platform/OS/License"
+
+
+namespace Platform {
+namespace OS {
+namespace License {
+
+struct License : CShift::Platform::OS::License {};
+
+}}}} // namespace CShift::Platform::OS::License
+
+#endif // LWCSF_CSHIFT_PLATFORM_OS_LICENSE

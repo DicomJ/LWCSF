@@ -1,0 +1,15 @@
+#ifndef CSHIFT_LWF_LICENSE
+#define CSHIFT_LWF_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+
+namespace CShift {
+namespace LWF {
+
+struct License : CShift::License {};
+
+}} // CShift::LWF
+
+#endif // CSHIFT_LWF_LICENSE

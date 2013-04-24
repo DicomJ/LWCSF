@@ -1,0 +1,15 @@
+#ifndef LWCSF_PLATFORM_LICENSE
+#define LWCSF_PLATFORM_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "License/GPL"
+#include "License/Simplified/BSD"
+
+
+namespace Platform {
+
+struct License : LWCSF::License::GPL, LWCSF::License::Simplified::BSD {};
+
+} // Platform::License
+
+#endif // LWCSF_PLATFORM_LICENSE

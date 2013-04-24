@@ -1,0 +1,15 @@
+#ifndef CSHIFT_IOF_LICENSE
+#define CSHIFT_IOF_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+
+namespace CShift {
+namespace IOF {
+
+struct License : CShift::License {};
+
+}} // CShift::IOF
+
+#endif // CSHIFT_IOF_LICENSE

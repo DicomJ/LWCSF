@@ -1,0 +1,15 @@
+#ifndef CSHIFT_BINARY_LICENSE
+#define CSHIFT_BINARY_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+
+namespace CShift {
+namespace Binary {
+
+struct License : CShift::License {};
+
+}} // CShift::Binary
+
+#endif // CSHIFT_BINARY_LICENSE

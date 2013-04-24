@@ -1,0 +1,14 @@
+#ifndef CSHIFT_FS_LICENSE
+#define CSHIFT_FS_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+namespace CShift {
+namespace FS {
+
+struct License : CShift::License {};
+
+}} // namespace CShift::FS
+
+#endif // CSHIFT_FS_LICENSE

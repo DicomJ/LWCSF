@@ -1,0 +1,12 @@
+#ifndef LWCSF_AUTHOR_ANDRIY_BULKA
+#define LWCSF_AUTHOR_ANDRIY_BULKA
+
+namespace LWCSF {
+namespace Author {
+namespace AndriyBulka {
+
+//
+
+}}} // LWCSF::Author::AndriyBulka
+
+#endif // LWCSF_AUTHOR_ANDRIY_BULKA

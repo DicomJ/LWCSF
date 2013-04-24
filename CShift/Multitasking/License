@@ -1,0 +1,14 @@
+#ifndef CSHIFT_MULTITASKING_LICENSE
+#define CSHIFT_MULTITASKING_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+namespace CShift {
+namespace Multitasking {
+
+struct License : CShift::License {};
+
+}} // namespace CShift::Multitasking
+
+#endif // CSHIFT_MULTITASKING_LICENSE

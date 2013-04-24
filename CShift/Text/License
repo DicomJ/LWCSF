@@ -1,0 +1,14 @@
+#ifndef CSHIFT_TEXT_LICENSE
+#define CSHIFT_TEXT_LICENSE
+
+#include "Author/Andriy.Bulka"
+#include "CShift/License"
+
+namespace CShift {
+namespace Text {
+
+struct License : CShift::License {};
+
+}} // CShift::Text
+
+#endif // CSHIFT_TEXT_LICENSE
