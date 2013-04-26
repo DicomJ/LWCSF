@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h1>Typing system<br />
+<hr></h1>
+<p><a name="FundamentalTypes"></a></p>
+<h2>Fundamental Types</h2>
+<div>
+<div style="float: left;" >
+<table>
+	<tr>
+		<th colspan="2">Integer</th>
+	</tr>
+	<tr>
+		<th>Signed</th>
+		<th>Unsigned</th>
+	</tr>
+	<tr class="odd">
+		<td>Int8</td>
+		<td>     UInt8</td>
+	</tr>
+	<tr class="even">
+		<td>Int16</td>
+		<td>    UInt16</td>
+	</tr>
+	<tr class="odd">
+		<td>Int32</td>
+		<td>    UInt32</td>
+	</tr>
+	<tr class="even">
+		<td>Int64</td>
+		<td>    UInt64</td>
+	</tr>
+	<tr class="odd">
+		<td>Int</td>
+		<td>      UInt</td>
+	</tr>
+	<tr class="even">
+		<td>LInt</td>
+		<td>     LUInt</td>
+	</tr>
+	<tr class="odd">
+		<td style="text-align:center;" colspan="2">Byte           </td>
+	</tr>
+</table>
+</div>
+<div style="float: left;" >
+<table>
+	<tr>
+		<th>Character</th>
+	</tr>
+	<tr class="odd">
+		<td>Char8</td>
+	</tr>
+	<tr class="even">
+		<td>Char16</td>
+	</tr>
+	<tr class="odd">
+		<td>Char32</td>
+	</tr>
+	<tr class="even">
+		<td>Char</td>
+	</tr>
+	<tr class="odd">
+		<td>WChar</td>
+	</tr>
+</table>
+</div>
+<div style="float: left;" >
+<table>
+	<tr>
+		<th>Real</th>
+	</tr>
+	<tr class="odd">
+		<td>Float</td>
+	</tr>
+	<tr class="even">
+		<td>Double</td>
+	</tr>
+	<tr class="odd">
+		<td>LDouble</td>
+	</tr>
+</table>
+</div>
+<div style="float: left;" >
+<table>
+	<tr>
+		<th>Pointer</th>
+	</tr>
+	<tr class="odd">
+		<td>T*</td>
+	</tr>
+	<tr class="even">
+		<td>T[]</td>
+	</tr>
+	<tr class="odd">
+		<td>T[N]</td>
+	</tr>
+</table>
+</div>
+<div style="float: left;" >
+<table>
+	<tr>
+		<th>Boolean</th>
+	</tr>
+	<tr class="odd">
+		<td>Bool</td>
+	</tr>
+</table>
+</div>
+<div><div style="clear: both;"></div>
+<h3>Integer types</h3>
+<p><em>Declaration:</em> [<span/><strong>L</strong><span/>ongest][<span/><strong>U</strong><span/>nsigned]<strong>Int</strong>[<span/><strong>S</strong><span/>ize]</p>
+<table>
+	<tr>
+		<th style="text-align:left;">Value         </th>
+		<th style="text-align:left;">Description </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><strong>U</strong>            </td>
+		<td> specifies an unsigned interger otherwise integer is signed </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><strong>S</strong><span/>ize  </td>
+		<td> the size in bits suffix should be present within declaration to specify fixed size intergers.<br />
+                     <em>Notice that 64 bit integer is not specified until C++98!</em> </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><strong>[<span/>U<span/>]Int</strong>  </td>
+		<td> the size of intergers is equal to machine word size </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><strong>L[<span/>U<span/>]Int</strong> </td>
+		<td> the longest possible integer </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;"><strong>Byte</strong>                  </td>
+		<td> a type size of which is equal to 8 bits </td>
+	</tr>
+</table>
+<h3>Character types</h3>
+<p>Specifies a code points of the Unicode standard</p>
+<table>
+	<tr>
+		<th style="text-align:left;">Value         </th>
+		<th style="text-align:left;">Description </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;">Char8          </td>
+		<td rowspan="3">the N-bit code unit of the Unicode <span class="caps">UTF</span>-N encoding form  </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">Char16         </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">Char32         </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">WChar          </td>
+		<td> the same as wchar_t <em>sizeof</em> wich is implementation-deﬁned </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">Char           </td>
+		<td> A default framework-wide code unit. It is defined from one of specified above types </td>
+	</tr>
+</table>
+<h3>Real types</h3>
+<p>This is just <strong><em>C</em></strong><span/>apital case of original C++ real types</p>
+<h4>Pointer types</h4>
+<p>Plain C++ pointer types. No special definitions are provided</p>
+<h4>Boolean type</h4>
+<p>Tha same as C++::bool</p>
+<h2>template&lttypename T&gt; class Type reference</h2>
+<table>
+	<tr>
+		<th style="text-align:left;" colspan="2">Public operators                              </th>
+		<th style="text-align:left;">Description                                                                    </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool   </td>
+		<td><strong>operator ==</strong> (const Type &amp;)           </td>
+		<td>Checks whether types are equal. Always returns True                              </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool   </td>
+		<td><strong>operator !=</strong> (const Type &amp;)           </td>
+		<td>Checks whether types are not equal. Always returns False                         </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">template &lttypename U&gt;                     </td>
+		<td rowspan="2">Checks whether types are equal. Always returns False                           </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool   </td>
+		<td><strong>operator ==</strong> (const Type&ltU&gt; &amp;)  </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">template &lttypename U&gt;                     </td>
+		<td rowspan="2">Checks whether types are not equal. Always returns True                        </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool   </td>
+		<td><strong>operator !=</strong> (const Type&ltU&gt; &amp;)  </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="3">Public types                                  </th>
+	</tr>
+	<tr>
+		<td> typename </td>
+		<td><a href="#Kind"><strong>Kind</strong></a>                         </td>
+		<td> Defines a kind of a type                                                          </td>
+	</tr>
+	<tr>
+		<td> typename </td>
+		<td><a href="#Sign"><strong>Sign</strong></a>                         </td>
+		<td> Only integers! Defines a sign type for specified integer type                     </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="3">Particular attributes                         </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T </td>
+		<td><a href="#minmax"><strong>min</strong></a>                        </td>
+		<td rowspan="2">Only integer and real types! Specialize a limit<br />
+                                                           value for a specified type                                                     </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T </td>
+		<td><a href="#minmax"><strong>max</strong></a>                        </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool </td>
+		<td><strong>subscriptible</strong>                        </td>
+		<td>Only pointers! Tells whether pointer is subscriptible (T[] and T[N]) or not (T*) </td>
+	</tr>
+</table>
+<p><a name="Kind"></a></p>
+<h2>typename Type&ltT&gt;::Kind</h2>
+<p>Defines one of the following classes</p>
+<table>
+	<tr>
+		<th style="text-align:left;">Kind::         </th>
+		<th style="text-align:left;">Description                                          </th>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Nonfundamental</th>
+		<td>Represents all non-fundamental types as structures and classes  </td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">Pointer       </th>
+		<td>Pointer types like T*, T[] and T[N]                             </td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Boolean       </th>
+		<td>Matches boolean type                                            </td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">Character     </th>
+		<td>Character type.<br />
+                             Notice that <strong>Char16</strong> and <strong>Char32</strong> types are casted as <strong>Kind::Integer</strong>  until <em>C++11 standard</em>. </td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Integer       </th>
+		<td>All signed and unsigned integer types                           </td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">Real          </th>
+		<td>Real types                                                      </td>
+	</tr>
+</table>
+<p>Kind::Type&ltT&gt; defines as Type&lttypename Type&ltT&gt;::Kind&gt;</p>
+<pre>Kind::Type&lt;Bool&gt;() == Type&lt;Kind::Boolean&gt;();
+Kind::Type&lt;Bool *&gt;() == Type&lt;Kind::Pointer&gt;();</pre>
+<pre>Kind::Type&lt;Int32&gt;() == Kind::Type&lt;Int16&gt;();
+Kind::Type&lt;Float&gt;() == Kind::Type&lt;Double&gt;();</pre>
+<pre>&lt;a name="Sign"&gt;&lt;/a&gt;</pre>
+<h2>typename Type&ltT&gt;::Sign</h2>
+<p>Only integer types! Defines one of the following classes</p>
+<table>
+	<tr>
+		<th>Kind::Integer:: </th>
+		<th>Description                                           </th>
+	</tr>
+	<tr class="odd">
+		<th>Signed          </th>
+		<td>Represents all non-fundamental types as structures and classes.  </td>
+	</tr>
+	<tr class="even">
+		<th>Unsigned        </th>
+		<td>Represents all non-fundamental types as structures and classes.  </td>
+	</tr>
+</table>
+<h2>Particular type properties</h2>
+<p><a name="minmax"></a></p>
+<h3>Type&ltT&gt;::min/ Type&ltT&gt;::max</h3>
+<table>
+	<tr>
+		<th>T   </th>
+		<th>Type&ltT&gt;::min</th>
+		<th>Type&ltT&gt;::max</th>
+	</tr>
+	<tr>
+		<th></th>
+		<th colspan="2">Integer types</th>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Int8</th>
+		<td style="text-align:right;">-128</td>
+		<td style="text-align:right;">127</td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">UInt8</th>
+		<td style="text-align:right;">0</td>
+		<td style="text-align:right;">255</td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Int16</th>
+		<td style="text-align:right;">-32768</td>
+		<td style="text-align:right;">32767</td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">UInt16</th>
+		<td style="text-align:right;">0</td>
+		<td style="text-align:right;">65535</td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Int32</th>
+		<td style="text-align:right;">-2147483648U</td>
+		<td style="text-align:right;">2147483647</td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">UInt32</th>
+		<td style="text-align:right;">0</td>
+		<td style="text-align:right;">4294967295U</td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Int64</th>
+		<td style="text-align:right;">-9223372036854775808LL</td>
+		<td style="text-align:right;">9223372036854775807LL</td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">UInt64</th>
+		<td style="text-align:right;">0</td>
+		<td style="text-align:right;">18446744073709551615ULL</td>
+	</tr>
+	<tr>
+		<th></th>
+		<th colspan="2">Real types</th>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">Float</th>
+		<td style="text-align:right;">1.17549435e-38F</td>
+		<td style="text-align:right;">3.40282347e+38F</td>
+	</tr>
+	<tr class="even">
+		<th style="text-align:left;">Double</th>
+		<td style="text-align:right;">2.2250738585072014e-308 </td>
+		<td style="text-align:right;">1.7976931348623157e+308 </td>
+	</tr>
+	<tr class="odd">
+		<th style="text-align:left;">LDouble</th>
+		<td style="text-align:right;">2.2250738585072014e-308L</td>
+		<td style="text-align:right;">1.7976931348623157e+308L</td>
+	</tr>
+</table>
+
+</body>
+</html>

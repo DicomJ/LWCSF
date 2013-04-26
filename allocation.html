@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h1>Allocation<br />
+<hr></h1>
+<pre>
+#include "LWF/Nothrow/Allocator.h"
+#include "LWF/Nothrow/Array/Allocator.h"
+#include "LWF/Placement/Allocator.h"
+#include "LWF/Std/Allocator.h"
+#include "LWF/Std/Array/Allocator.h"
+#include "LWF/Std/Typed/Allocator.h"
+#include "LWF/Custom/Allocator.h"
+#include "LWF/Custom/Array/Allocator.h"
+#include "LWF/Deleter.h"
+#include "LWF/Destroying/Deleter.h"
+#include "LWF/Placement/Deleter.h"
+#include "LWF/Deallocation/Deleter.h"
+</pre>
+<h2>Conception</h2>
+<h3>An object life cycle</h3>
+<p>A life cycle of each object comprises:</p>
+<ul>
+	<li>object <strong>creation</strong>:
+	<ul>
+		<li>the memory <em>allocation</em></li>
+		<li>a class <em>construction</em></li>
+	</ul></li>
+	<li>objet using</li>
+	<li>objet <strong>destroying</strong>:
+	<ul>
+		<li>a class <em>destruction</em></li>
+		<li>the memory <em>deallocation</em></li>
+	</ul></li>
+</ul>
+<h3>Kind of classes</h3>
+<table>
+	<tr>
+		<th style="text-align:left;">Kind                </th>
+		<th style="text-align:left;">Description </th>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Allocator           </th>
+		<td>A class intended to provide the memory to accommodate an object </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">C++::new statement  </th>
+		<td>The statement which initializes an object by calling a specified <em>Object&#8217;s::constructor(&#8230;)</em> on memory allocated by the <strong>Allocator</strong> </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Deallocator         </th>
+		<td>Frees the memory allocated by the <strong>Allocator</strong> </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Deleter             </th>
+		<td>Combines invoking of the <em>Object&#8217;s::~destructor()</em> and the <strong>Deallocator</strong> </td>
+	</tr>
+</table>
+<h2>Interfaces</h2>
+<p><img src="allocation.png" alt="" /></p>
+<table>
+	<tr>
+		<th style="text-align:left;" colspan="2">Deallocator </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Dellocates a block of specified memory </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">Allocator : Deallocator </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void * </td>
+		<td style="text-align:left;">allocate(UInt size) const </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Allocates a block of memory of specified size </td>
+	</tr>
+</table>
+<h2>Classes</h2>
+<table>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Std::                                               </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Classes of this namespace operate with the memory in a way trivial <em>C++ new and delete statements</em> do. </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Deallocator                               </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Allocator                                 </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void * </td>
+		<td style="text-align:left;">allocate(UInt size) const                             </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Array::Deallocator                        </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Array::Allocator                          </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void * </td>
+		<td style="text-align:left;">allocate(UInt size) const                             </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Std::Typed::                                        </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">The same as <strong>Std::</strong> (extends and overloads it) but these classes automatically calculate memory size based on specified type of Object </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt; Allocator : Std::Allocator </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T *    </td>
+		<td style="text-align:left;">allocate() const                                      </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt; Array::Allocator&lt;T[]&gt; : Std::Array::Allocator </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T *    </td>
+		<td style="text-align:left;">allocate(UInt count) const                            </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Nothrow::                                           </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Similar to <strong>Std::</strong> but uses <em>std::nothrow version of C++ new and delete statements</em> and should be rarely used. </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Deallocator                               </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Allocator                                 </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void * </td>
+		<td style="text-align:left;">allocate(UInt size) const                             </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Placement::                                         </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Just provides an <strong>Allocator/Deallocator</strong> interface for already allocated memory.<br />
+       Notice no array-specific implementation exists it&#8217;s the same as this one. </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Deallocator                               </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">deallocate(Void *memory) const                        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">Allocator                                 </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Allocator(Void *memory)                               </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">allocate(UInt) const                                  </td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<th style="text-align:left;" colspan="2">::                                                            </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Aimed to <em>delete</em> objects allocated with <em>C++ new statement</em>   </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt;  Deleter  </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">Delete(T *object) const                               </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt;  Deleter&lt;T[]&gt; </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">Delete(T *objects) const                              </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Destroying::                                        </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Destructs an than deallocate objest(s) by specified deallocator</td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T, typename Deallocator&gt;  Deleter : Deallocator  </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Deleter(const Deallocator &amp;deallocator)               </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">Delete(T *object) const                               </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T, typename Deallocator&gt;  Deleter&lt;T[]&gt; : Deallocator </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Deleter(const Deallocator &amp;deallocator)               </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">Delete(T *objects, UInt count) const                  </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Placement::                                         </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Destructs objest(s) allocated by <strong>Placement::Allocator</strong>        </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt;  Deleter : Destroying::Deleter&lt;T, Placement::Deallocator&gt; </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Deleter(const Placement::Deallocator &amp;deallocator)    </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" colspan="2">namespace Deallocation::                                      </th>
+	</tr>
+	<tr>
+		<td style="text-align:left;" colspan="2">Just represents a <strong>Deleter</strong> interface to the <strong>Deallocator</strong> object </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;padding-left: 25px;" colspan="2">template&lttypename T&gt;  Deleter : Destroying::Deleter&lt;T, Placement::Deallocator&gt; </th>
+	</tr>
+	<tr>
+		<td style="text-align:right;"></td>
+		<td style="text-align:left;">Deleter(const Deallocator &amp;deallocator)               </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void   </td>
+		<td style="text-align:left;">Delete(Void *objects) const                           </td>
+	</tr>
+</table>
+<h2>Implementation details</h2>
+<h3>Allocators/Deallocators</h3>
+<table>
+	<tr>
+		<th style="text-align:center;" rowspan="2">Class                      </th>
+		<th style="text-align:center;" colspan="2">Implementation </th>
+	</tr>
+	<tr>
+		<th style="text-align:left;">::Allocator::allocate(UInt size) const   </th>
+		<th>::Deallocator::deallocate(Void *memory) const </th>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Std::Allocator/Deallocator               </th>
+		<td>::operator new(size) </td>
+		<td>::operator delete(memory) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Std::Array::Allocator/Deallocator        </th>
+		<td>::operator new[](size) </td>
+		<td>::operator delete[](memory) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Std::Typed::Allocator/Deallocator&ltT&gt; </th>
+		<td>Std::Allocator::allocate(sizeof(T))) </td>
+		<td>Std::Deallocator::deallocate(memory)  </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Std::Typed::Allocator/Deallocator&lt;T[]&gt;   </th>
+		<td>Std::Array::Allocator::allocate(count * sizeof(T)) </td>
+		<td>Std::Array::Deallocator::deallocate(memory)  </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Nothrow::Allocator/Deallocator           </th>
+		<td>::operator new(size, std::nothrow) </td>
+		<td>::operator delete(memory, std::nothrow) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Nothrow::Array::Allocator/Deallocator    </th>
+		<td>::operator new[](size, std::nothrow) </td>
+		<td>::operator delete[](memory, std::nothrow) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Placement::Allocator/Deallocator         </th>
+		<td>Just returns already allocated memory passed through a constructor </td>
+		<td>Does nothing </td>
+	</tr>
+</table>
+<h3>Deleters</h3>
+<table>
+	<tr>
+		<th style="text-align:center;" rowspan="2">Class                      </th>
+		<th style="text-align:center;" colspan="2">Delete(object) implementation </th>
+	</tr>
+	<tr>
+		<th style="text-align:left;"><em>Destruction</em>                </th>
+		<th><em>Deallocation</em> </th>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Deleter&ltType&gt; </th>
+		<td style="text-align:center;" colspan="2">delete object </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Deleter&lt;Type[]&gt;              </th>
+		<td style="text-align:center;" colspan="2">delete [] object </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Destroying::Deleter&lt;Type, Deallocator&gt;   </th>
+		<td>object.~Type() </td>
+		<td>deallocator.deallocate(object) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Destroying::Deleter&lt;Type[], Array::Deallocator&gt; </th>
+		<td>object[count].~Type() </td>
+		<td>deallocator.deallocate(object) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Placement::Deleter<Type>   </th>
+		<td>same as Destroying::Deleter&ltType&gt; </td>
+		<td>Placemenet::Deallocator::deallocate(object) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Placement::Deleter&lt;Type[]&gt; </th>
+		<td>same as Destroying::Deleter&lt;Type[]&gt; </td>
+		<td>Placemenet::Deallocator::deallocate(object) </td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Deallocation::Deleter&ltDeallocator&gt;   </th>
+		<td>Does nothing </td>
+		<td>deallocator.deallocate(object) </td>
+	</tr>
+</table>
+<h2>Use cases examples</h2>
+<table style="border-spacing: 1px;">
+	<tr>
+		<th colspan="2" rowspan="2">Usecase::</th>
+		<th colspan="2">Object </th>
+	</tr>
+	<tr>
+		<th><em>Creation</em> </th>
+		<th><em>Destroying</em> </th>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="2">Standard::</th>
+		<th>Plain<br />
+ </th>
+		<td>Type *ptr = new Type;                                    </td>
+		<td>Deleter&ltType  &gt;().Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th>Array<br />
+ </th>
+		<td>Type *ptr = new Type[N];                                 </td>
+		<td>Deleter&lt;Type[]&gt;().Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="2">Nothrow::</th>
+		<th>Plain<br />
+ </th>
+		<td>  Type *ptr = new (nothrow) Type;                           </td>
+		<td>Deleter&ltType  &gt;().Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th>Array<br />
+ </th>
+		<td>  Type *ptr = new (nothrow) Type[N];                        </td>
+		<td>Deleter&lt;Type[]&gt;().Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="2">Placement::</th>
+		<th>Plain<br />
+ </th>
+		<td>  Type *ptr = new (Placement::Allocator(memory)) Type;      </td>
+		<td>Placement::Deleter<Type  >().Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th>Array<br />
+ </th>
+		<td>  Type *ptr = new (Placement::Allocator(memory)) Type[N];   </td>
+		<td>Placement::Deleter&lt;Type[]&gt;().Delete(ptr, N);</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="2">Custom::</th>
+		<th>Plain<br />
+ </th>
+		<td>  typedef Std::Allocator Allocator;<br />
+    Allocator allocator;<br />
+    Type *ptr = new (allocator) Type;                         </td>
+		<td>Destroying::Deleter&lt;Type,   Allocator&gt;(allocator).Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th>Array<br />
+ </th>
+		<td>  typedef Std::Array::Allocator Allocator;<br />
+    Allocator allocator;<br />
+    Type *ptr = new (allocator) Type[N];                      </td>
+		<td>Destroying::Deleter&lt;Type[], Allocator&gt;(allocator).Delete(ptr, N);</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="2">Preallocated::</th>
+		<th>Plain<br />
+ </th>
+		<td>  typedef Std::Typed::Allocator&ltType&gt; Allocator;<br />
+    Allocator allocator;<br />
+    Type *ptr = allocator.allocate( ); Usecase::Placement::Plain(ptr); </td>
+		<td>Deallocation::Deleter&ltAllocator&gt;(allocator).Delete(ptr);</td>
+	</tr>
+	<tr>
+		<th>Array<br />
+ </th>
+		<td>  typedef Std::Typed::Allocator&lt;Type[]&gt; Allocator;<br />
+    Allocator allocator;<br />
+    Type *ptr = allocator.allocate(N); Usecase::Placement::Array(ptr); </td>
+		<td>Deallocation::Deleter&ltAllocator&gt;(allocator).Delete(ptr);</td>
+	</tr>
+</table>
+
+</body>
+</html>

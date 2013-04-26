@@ -1,74 +1,317 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Lwcsf : " />
+<div align="center">
+<div style="width: 1000px;"align="left">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <div align="right" style="padding-bottom: 10px;">
+    View sources on <a href="https://github.com/DicomJ/LWCSF/tree/master/CShift/">GitHub</a>
+    or downdload as <a href="https://github.com/DicomJ/LWCSF/tarball/master">tar</a>
+    or <a href="https://github.com/DicomJ/LWCSF/zipball/master">zip</a>
+    archive
+  </div>
 
-    <title>Lwcsf</title>
-  </head>
+<div align="left" style="padding: 10px; box-shadow: 0 0 10px gray;">
+<div style="color:gray; font-weight:bold;">
 
-  <body>
+<ul class="content">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/DicomJ/LWCSF">View on GitHub</a>
+  <li><div class="content">Note Papers</div>
+  <ul class="content">
 
-          <h1 id="project_title">Lwcsf</h1>
-          <h2 id="project_tagline"></h2>
+    <li><a href="type.html">Types</a></li>
+    <li><a href="allocation.html">Allocators</a></li>
+    <li><a href="ptr.html">Smart-Pointers</a></li>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/DicomJ/LWCSF/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/DicomJ/LWCSF/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+    <li><a href="containers.html">Containers</a>
+    <ul class="content">
+      <li><a href="sequence.containers.html">Sequence containers</a></li>
+      <li><a href="associative.containers.html">Accociative containers</a></li>
+    </ul>
+    </li>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+    <li><a href="string.html">Text strings</a></li>
+    <li><a href="multitasking.html">Multitasking</a></li>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+  </ul>
+  </li>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+  <li><div class="content">LWF</div>
+  <ul class="content">
 
-<h3>Designer Templates</h3>
+    <li>License<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/License">#include "LWF/License"</a></li>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+    <li><a href="type.html">Typing system</a><a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Type.h">#include "LWF/Type.h"</a>
+    <ul class="content">
+        <li><a href="type.html#FundamentalTypes">Fundamental types</a></li>
+        <li><a href="type.html#Kind">Kind of type</a></li>
+        <li><a href="type.html#minmax">Type limits (min/max)</a></li>
+    </ul>
+    </li>
 
-<h3>Rather Drive Stick?</h3>
+    <li>Memory managment
+    <ul class="content">
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+        <li>Allocators
+        <ul class="content">
 
-<h3>Authors and Contributors</h3>
+          <li>Std::Typed::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Std/Typed/Allocator.h">#include "LWF/Std/Typed/Allocator.h"</a></li>
+          <li>Std::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Std/Allocator.h">#include "LWF/Std/Allocator.h"</a></li>
+          <li>Std::Array::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Std/Array/Allocator.h">#include "LWF/Std/Array/Allocator.h"</a></li>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+          <li>Nothrow::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Nothrow/Allocator.h">#include "LWF/Nothrow/Allocator.h"</a></li>
+          <li>Nothrow::Array::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Nothrow/Array/Allocator.h">#include "LWF/Nothrow/Array/Allocator.h"</a></li>
 
-<h3>Support or Contact</h3>
+          <li><i>Custom::Allocator</i><a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Custom/Allocator.h">#include "LWF/Custom/Allocator.h"</a></li>
+          <li><i>Custom::Array::Allocator</i><a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Custom/Array/Allocator.h">#include "LWF/Custom/Array/Allocator.h"</a></li>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+          <li>Placement::Allocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Placement/Allocator.h">#include "LWF/Placement/Allocator.h"</a></li>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Lwcsf maintained by <a href="https://github.com/DicomJ">DicomJ</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+        </ul>
+        </li>
 
-    
+        <li>Deallocators
+        <ul class="content">
 
-  </body>
+          <li>Std::Deallocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Std/Deallocator.h">#include "LWF/Std/Deallocator.h"</a></li>
+          <li>Std::Array::Deallocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Std/Array/Deallocator.h">#include "LWF/Std/Array/Deallocator.h"</a></li>
+
+          <li>Nothrow::Deallocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Nothrow/Deallocator.h">#include "LWF/Nothrow/Deallocator.h"</a></li>
+          <li>Nothrow::Array::Deallocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Nothrow/Array/Deallocator.h">#include "LWF/Nothrow/Array/Deallocator.h"</a></li>
+
+          <li><i>Custom::Deallocator</i><a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Custom/Deallocator.h">#include "LWF/Custom/Deallocator.h"</a></li>
+          <li><i>Custom::Array::Deallocator</i><a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Custom/Array/Deallocator.h">#include "LWF/Custom/Array/Deallocator.h"</a></li>
+
+          <li>Placement::Deallocator<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Placement/Deallocator.h">#include "LWF/Placement/Deallocator.h"</a></li>
+
+        </ul>
+        </li>
+
+        <li>Deleters
+        <ul class="content">
+          <li>Deleter<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Deleter.h">#include "LWF/Deleter.h"</a></li>
+          <li>Destroying::Deleter<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Destroying/Deleter.h">#include "LWF/Destroying/Deleter.h"</a></li>
+          <li>Placement::Deleter<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Placement/Deleter.h">#include "LWF/Placement/Deleter.h"</a></li>
+          <li>Deallocation::Deleter<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Deallocation/Deleter.h">#include "LWF/Deallocation/Deleter.h"</a></li>
+        </ul>
+        </li>
+    </ul>
+    </li>
+
+    <li>Smart-pointers
+    <ul class="content">
+      <li>Weak::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Weak/Ptr.h">#include "LWF/Weak/Ptr.h"</a></li>
+      <li>Unique::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unique/Ptr.h">#include "LWF/Unique/Ptr.h"</a></li>
+      <li>Shared::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Shared/Ptr.h">#include "LWF/Shared/Ptr.h"</a></li>
+      <li>TS::Shared::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/TS/Shared/Ptr.h">#include "LWF/TS/Shared/Ptr.h"</a></li>
+      <li>Intrusive::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Intrusive/Ptr.h">#include "LWF/Intrusive/Ptr.h"</a></li>
+      <li>Reference::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Reference/Ptr.h">#include "LWF/Reference/Ptr.h"</a></li>
+
+      <li>Index::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Index/Ptr.h">#include "LWF/Index/Ptr.h"</a></li>
+      <li>Move::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Move/Ptr.h">#include "LWF/Move/Ptr.h"</a></li>
+
+      <li>Adaptors
+      <ul class="content">
+        <li>Const::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Const/Ptr.h">#include "LWF/Const/Ptr.h"</a></li>
+        <li>Reverse::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Reverse/Ptr.h">#include "LWF/Reverse/Ptr.h"</a></li>
+        <li>Ring::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Ring/Ptr.h">#include "LWF/Ring/Ptr.h"</a></li>
+        <li>Dereference::Ptr<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Dereference/Ptr.h">#include "LWF/Dereference/Ptr.h"</a></li>
+      </ul>
+      </li>
+
+    </ul>
+    </li>
+
+    <li>Containers
+    <ul class="content">
+
+      <li>Sequence containers
+      <ul class="content">
+
+        <li>Static containers
+        <ul class="content">
+
+          <li>Range<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Range.h">#include "LWF/Range.h"</a></li>
+
+          <li>Array containers
+          <ul class="content">
+
+            <li>Static::Weak::Array<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Static/Weak/Array.h">#include "LWF/Static/Weak/Array.h"</a></li>
+            <li>Static::Unique::Array<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Static/Unique/Array.h">#include "LWF/Static/Unique/Array.h"</a></li>
+            <li>Weak::Array<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Weak/Array.h">#include "LWF/Weak/Array.h"</a></li>
+            <li>Unique::Array<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unique/Array.h">#include "LWF/Unique/Array.h"</a></li>
+
+          </ul>
+          </li>
+
+        </ul>
+        </li>
+
+        <li>Dynamic containers
+        <ul class="content">
+
+          <li>Forward::List<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Forward/List.h">#include "LWF/Forward/List.h"</a></li>
+          <li>List<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/List.h">#include "LWF/List.h"</a></li>
+
+          <li>Array containers
+          <ul class="content">
+
+            <li>Reversible
+            <ul class="content">
+              <li>Vector<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Vector.h">#include "LWF/Vector.h"</a></li>
+              <li>Deque<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Deque.h">#include "LWF/Deque.h"</a></li>
+            </ul>
+            </li>
+
+            <li>Ring
+            <ul class="content">
+              <li>Ring::Vector<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Ring/Vector.h">#include "LWF/Ring/Vector.h"</a></li>
+              <li>Ring::Deque<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Ring/Deque.h">#include "LWF/Ring/Deque.h"</a></li>
+            </ul>
+            </li>
+
+          </ul>
+          </li>
+
+        </ul>
+        </li>
+
+        <li>Adaptors
+        <ul class="content">
+          <li>SCO (Short/Small Container Optimization)<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/SCO.h">#include "LWF/SCO.h"</a></li>
+          <li>COW (Copy-On-Write)<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/COW.h">#include "LWF/COW.h"</a></li>
+        </ul>
+        </li>
+
+        <li>(Binary) Buffer
+        <ul class="content">
+
+          <li>Static::Weak::Buffer<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Static/Weak/Buffer.h">#include "LWF/Static/Weak/Buffer.h"</a></li>
+          <li>Static::Unique::Buffer<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Static/Unique/Buffer.h">#include "LWF/Static/Unique/Buffer.h"</a></li>
+          <li>Weak::Buffer<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Weak/Buffer.h">#include "LWF/Weak/Buffer.h"</a></li>
+          <li>Unique::Buffer<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unique/Buffer.h">#include "LWF/Unique/Buffer.h"</a></li>
+          <li>Ring::Buffer<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Ring/Buffer.h">#include "LWF/Ring/Buffer.h"</a></li>
+
+        </ul>
+        </li>
+
+      </ul>
+      </li>
+
+      <li>Associative containers
+      <ul class="content">
+
+        <li>Ordered
+        <ul class="content">
+          <li>Binary::Search::Tree<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Binary/Search/Tree.h">#include "LWF/Binary/Search/Tree.h"</a></li>
+          <li>Binary::Search::RB::Tree<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Binary/Search/RB/Tree.h">#include "LWF/Binary/Search/RB/Tree.h"</a></li>
+          <li>Map<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Map.h">#include "LWF/Map.h"</a></li>
+          <li>Set<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Set.h">#include "LWF/Set.h"</a></li>
+          <li>Multi::Map<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Multi/Map.h">#include "LWF/Multi/Map.h"</a></li>
+          <li>Multi::Set<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Multi/Set.h">#include "LWF/Multi/Set.h"</a></li>
+
+        </ul>
+        </li>
+
+        <li>Unordered
+        <ul class="content">
+          <li>Hash::Chaining::Table<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Hash/Chaining/Table.h">#include "LWF/Hash/Chaining/Table.h"</a></li>
+          <li>Unordered::Map<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unordered/Map.h">#include "LWF/Unordered/Map.h"</a></li>
+          <li>Unordered::Set<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unordered/Set.h">#include "LWF/Unordered/Set.h"</a></li>
+          <li>Unordered::Multi::Map<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unordered/Multi/Map.h">#include "LWF/Unordered/Multi/Map.h"</a></li>
+          <li>Unordered::Multi::Set<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Unordered/Multi/Set.h">#include "LWF/Unordered/Multi/Set.h"</a></li>
+        </ul>
+        </li>
+
+      </ul>
+      </li>
+
+    </ul>
+    </li>
+
+    <li>Algorithms
+    <ul class="content">
+      <li>min/max<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Algorithm/min.max.h">#include "LWF/Algorithm/min.max.h"</a></li>
+      <li>countof<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Algorithm/countof.h">#include "LWF/Algorithm/countof.h"</a></li>
+      <li>absolute<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Algorithm/absolute.h">#include "LWF/Algorithm/absolute.h"</a></li>
+    </ul>
+    </li>
+
+    <li>Miscellaneous
+    <ul class="content">
+      <li>Tuple<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Tuple.h">#include "LWF/Tuple.h"</a></li>
+      <li>Pair<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/LWF/Pair.h">#include "LWF/Pair.h"</a></li>
+    </ul>
+    </li>
+
+  </ul>
+  </li><!-- LWF -->
+
+  <li><div class="content">Text</div>
+  <ul class="content">
+    <li>UTF<8>|UTF<16>|UTF<32>::String<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Text/UTF/String.h">#include "Text/UTF/String.h"</a></li>
+    <li>Wide::String<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Text/Wide/String.h">#include "Text/Wide/String.h"</a></li>
+    <li>ASCII::String<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Text/ASCII/String.h">#include "Text/ASCII/String.h"</a></li>
+    <li>Code::Page::String<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Text/Code/Page/String.h">#include "Text/Code/Page/String.h"</a></li>
+    <li>String (default)<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Text/String.h">#include "Text/String.h"</a></li>
+  </ul>
+  </li><!-- Text -->
+
+  <li><div class="content">Multitasking</div>
+  <ul class="content">
+
+    <li>Current::Thread<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Current/Thread.h">#include "Multitasking/Current/Thread.h"</a></li>
+    <li>Extendable::Thread<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Extendable/Thread.h">#include "Multitasking/Extendable/Thread.h"</a></li>
+    <li>RAII::Thread<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/RAII/Thread.h">#include "Multitasking/RAII/Thread.h"</a></li>
+    <li>Detached::Thread<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Detached/Thread.h">#include "Multitasking/Detached/Thread.h"</a></li>
+
+    <li>Synchronization
+    <ul class="content">
+
+      <li>Thread::Recursive::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Recursive/Mutex.h">#include "Multitasking/Thread/Recursive/Mutex.h"</a></li>
+      <li>Thread::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Mutex.h">#include "Multitasking/Thread/Mutex.h"</a></li>
+      <li>Thread::Mutex::Condition<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Mutex/Condition.h">#include "Multitasking/Thread/Mutex/Condition.h"</a></li>
+      <li>Thread::Mutex::Synch<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Mutex/Synch.h">#include "Multitasking/Thread/Mutex/Synch.h"</a></li>
+
+      <li>Thread::Recursive::Timed::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Recursive/Timed/Mutex.h">#include "Multitasking/Thread/Recursive/Timed/Mutex.h"</a></li>
+      <li>Thread::Timed::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Timed/Mutex.h">#include "Multitasking/Thread/Timed/Mutex.h"</a></li>
+      <li>Thread::Timed::Mutex::Condition<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Timed/Mutex/Condition.h">#include "Multitasking/Thread/Timed/Mutex/Condition.h"</a></li>
+      <li>Thread::Timed::Mutex::Synch<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/Timed/Mutex/Synch.h">#include "Multitasking/Thread/Timed/Mutex/Synch.h"</a></li>
+
+      <li>Thread::RW::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Thread/RW/Mutex.h">#include "Multitasking/Thread/RW/Mutex.h"</a></li>
+    </ul>
+    </li>
+
+    <li>Process::TODO<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Current/Process.h">#include "Multitasking/Current/Process.h"</a></li>
+
+    <li>Synchronization
+    <ul class="content">
+
+      <li>Process::Recursive::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Recursive/Mutex.h">#include "Multitasking/Process/Recursive/Mutex.h"</a></li>
+      <li>Process::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Mutex.h">#include "Multitasking/Process/Mutex.h"</a></li>
+      <li>Process::Mutex::Condition<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Mutex/Condition.h">#include "Multitasking/Process/Mutex/Condition.h"</a></li>
+      <li>Process::Mutex::Synch<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Mutex/Synch.h">#include "Multitasking/Process/Mutex/Synch.h"</a></li>
+
+      <li>Process::Recursive::Timed::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Recursive/Timed/Mutex.h">#include "Multitasking/Process/Recursive/Timed/Mutex.h"</a></li>
+      <li>Process::Timed::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Timed/Mutex.h">#include "Multitasking/Process/Timed/Mutex.h"</a></li>
+      <li>Process::Timed::Mutex::Condition<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Timed/Mutex/Condition.h">#include "Multitasking/Process/Timed/Mutex/Condition.h"</a></li>
+      <li>Process::Timed::Mutex::Synch<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/Timed/Mutex/Synch.h">#include "Multitasking/Process/Timed/Mutex/Synch.h"</a></li>
+
+      <li>Process::RW::Mutex<a class="include" href="https://github.com/DicomJ/LWCSF/tree/master/CShift/Multitasking/Process/RW/Mutex.h">#include "Multitasking/Process/RW/Mutex.h"</a></li>
+    </ul>
+    </li>
+
+  </ul>
+  </li><!-- Multitasking -->
+
+</ul>
+
+</div></div></div></div>
+
+</body>
 </html>

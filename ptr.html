@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h1>Smart-pointers<br />
+<hr></h1>
+<h2>Conception</h2>
+<p>Kind of smart pointers:</p>
+<ul>
+	<li><strong>Reference smart pointer</strong><br />
+Just simulates a plain C++ pointer</li>
+	<li><strong>Ownership smart pointer</strong><br />
+Determines a life-time  of object it refers to</li>
+	<li><strong>Adaptor smart pointer</strong><br />
+Inherits and overloads particular functionality of the base pointer</li>
+</ul>
+<h3>Weak::Ptr</h3>
+<p>This is the only reference pointer.</p>
+<h3>Unique::Ptr</h3>
+<p>Takes an ownership of object or array of objects</p>
+<h3>Shared::Ptr</h3>
+<p>Takes a partial ownership of object or array of objects by using extrusive reference-counting.</p>
+<h3>Intrusive::Ptr</h3>
+<p>The same as Shared::Ptr but uses intrusive reference-counting.</p>
+<h3>Reference</h3>
+<p>It&#8217;s a specialization of the Intrusive::Ptr.</p>
+<h3>Const::Ptr</h3>
+<p>An adaptor that makes a base pointer a constant.</p>
+<h3>Reverse::Ptr</h3>
+<p>An adaptor that reverses the increment and decrement operation of the base pointer.</p>
+<h2>Member map</h2>
+<table style="text-align:center;border-spacing: 1px;">
+	<tr>
+		<th colspan="3" rowspan="4">Operators/Functionality </th>
+		<th colspan="14">Smart pointers </th>
+	</tr>
+	<tr>
+		<th colspan="2">Reference   </th>
+		<th colspan="8">Ownership </th>
+		<th colspan="4">Adaptors </th>
+	</tr>
+	<tr>
+		<th colspan="2">Weak::    </th>
+		<th colspan="2">Unique::  </th>
+		<th colspan="2">Shared:: </th>
+		<th colspan="2">TS::Shared::<br />
+ </th>
+		<th>Intrusive:: </th>
+		<th>Reference:: </th>
+		<th colspan="2">Const::  </th>
+		<th colspan="2">Reverse:: </th>
+	</tr>
+	<tr>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&ltT&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt;<br />
+ </th>
+		<th>Ptr&ltT&gt; </th>
+		<th>	Ptr&lt;T[]&gt; </th>
+	</tr>
+	<tr>
+		<th colspan="2">Optional template parameters </th>
+		<th></th>
+		<th colspan="2"></th>
+		<th colspan="2">&lt;&#8230;, Deleter&gt;<br />
+ </th>
+		<th colspan="4">&lt;&#8230;, Deleter, Counter, DynamicAllocator&gt;<br />
+ </th>
+		<th colspan="2">&lt;&#8230;, Adjuster&gt; </th>
+		<th colspan="2"></th>
+		<th colspan="2"></th>
+	</tr>
+	<tr>
+		<th style="text-align:right;" colspan="2">Type         </th>
+		<td style="text-align:left;">typename Ptr::Type    </td>
+		<td class="yes" colspan="10"></td>
+		<td class="base" colspan="4" rowspan="100">Base</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" colspan="2">Construction </th>
+		<td style="text-align:left;">Ptr ptr(ptr&#8217;)<br />
+                        Ptr ptr = ptr&#8217;<br />
+                        Ptr ptr(T*)<br />
+                        Ptr ptr(null)<br />
+                        Ptr ptr = null<br />
+                        Ptr ptr(Ptr&ltU&gt;(&#8230;));<br />
+                        Ptr ptr = Ptr&ltU&gt;(&#8230;);<br />
+                                              </td>
+		<td class="yes" colspan="2"></td>
+		<td class="yes" colspan="2">Ptr ptr(&#8230;[, Deleter])	</td>
+		<td class="yes" colspan="4">Ptr ptr(&#8230;[, Deleter[, DynamicAlocator]]) </td>
+		<td class="yes" colspan="2"></td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" colspan="2">Destruction  </th>
+		<td style="text-align:left;">~Ptr()                </td>
+		<td class="yes" colspan="10">*this = null </td>
+	</tr>
+	<tr>
+		<th style="text-align:right;" colspan="2" rowspan="2">Assignment </th>
+		<td style="text-align:left;">ptr = ptr&#8217;            </td>
+		<td class="yes" colspan="2">Copies a reference    </td>
+		<td class="yes" colspan="2">Moves an object     </td>
+		<td class="yes" colspan="6">Copyies an object&#8217;s reference and increments a counter </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">ptr = null            </td>
+		<td class="yes" colspan="2">Releases a reference	</td>
+		<td class="yes" colspan="2">Releases an object	</td>
+		<td class="yes" colspan="6">if (0 == &#8212;counter) { releases an object } </td>
+	</tr>
+	<tr>
+		<th rowspan="2">Pointer Specific<br />
+ </th>
+		<th>Dereference     </th>
+		<td style="text-align:left;">*ptr                 </td>
+		<td class="yes" colspan="10" rowspan="4"></td>
+	</tr>
+	<tr>
+		<th>Member access   </th>
+		<td style="text-align:left;">ptr.operator&#8594;()     </td>
+	</tr>
+	<tr>
+		<th rowspan="2">Comparison<br />
+ </th>
+		<th>Equal           </th>
+		<td style="text-align:left;">ptr == ptr&#8217;<br />
+                        ptr == null<br />
+                        null == ptr           </td>
+	</tr>
+	<tr>
+		<th>Not equal       </th>
+		<td style="text-align:left;">ptr != ptr&#8217;<br />
+                        ptr != null<br />
+                        null != ptr           </td>
+	</tr>
+	<tr>
+		<th colspan="2">Subcription   </th>
+		<td style="text-align:left;">ptr [Int(index)]     </td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no" colspan="2"></td>
+	</tr>
+	<tr>
+		<th rowspan="5">Arithmetic<br />
+ </th>
+		<th>Addition        </th>
+		<td style="text-align:left;">ptr + Int(index)     </td>
+		<td class="no" rowspan="10"></td>
+		<td class="yes" rowspan="10"></td>
+		<td class="no" colspan="8" rowspan="10"></td>
+	</tr>
+	<tr>
+		<th>Subtraction     </th>
+		<td style="text-align:left;">ptr &#8211; Int(index)     </td>
+	</tr>
+	<tr>
+		<th>Incrementing    </th>
+		<td style="text-align:left;">ptr++<br />
+                         ++ptr                </td>
+	</tr>
+	<tr>
+		<th>Decrementing    </th>
+		<td style="text-align:left;">ptr&#8212;<br />
+                         &#8212;ptr                </td>
+	</tr>
+	<tr>
+		<th>Compound<br />
+     assignment      </th>
+		<td style="text-align:left;">ptr += Int(index)<br />
+                         ptr -= Int(index)    </td>
+	</tr>
+	<tr>
+		<th rowspan="5">Relational<br />
+ </th>
+		<th>Subtraction     </th>
+		<td style="text-align:left;">ptr &#8211; ptr&#8217;           </td>
+	</tr>
+	<tr>
+		<th>Greate than     </th>
+		<td style="text-align:left;">ptr &gt; ptr&#8217;           </td>
+	</tr>
+	<tr>
+		<th>Greate than<br />
+     or equal to     </th>
+		<td style="text-align:left;">ptr &gt;= ptr&#8217;          </td>
+	</tr>
+	<tr>
+		<th>Less than       </th>
+		<td style="text-align:left;">ptr &lt; ptr&#8217;           </td>
+	</tr>
+	<tr>
+		<th>Less than<br />
+     or equal to     </th>
+		<td style="text-align:left;">ptr &lt;= ptr&#8217;          </td>
+	</tr>
+	<tr>
+		<th rowspan="3">Particular<br />
+ </th>
+		<th>Detaching       </th>
+		<td style="text-align:left;">ptr.Weak() = null    </td>
+		<td class="no" colspan="2"></td>
+		<td class="yes" colspan="8"></td>
+	</tr>
+	<tr>
+		<th>Ownership object<br />
+     (deleter)       </th>
+		<td style="text-align:left;">ptr.owner()          </td>
+		<td class="no" colspan="2"></td>
+		<td class="yes" colspan="6"></td>
+		<td class="no" colspan="2"></td>
+	</tr>
+	<tr>
+		<th>Uniqueness      </th>
+		<td style="text-align:left;">ptr.unique()         </td>
+		<td class="no" colspan="4"></td>
+		<td class="yes" colspan="4"></td>
+		<td class="no" colspan="2"></td>
+	</tr>
+</table>
+
+</body>
+</html>

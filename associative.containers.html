@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<h1>Associative containers<br />
+<hr></h1>
+<h2>Conception</h2>
+<p>The <strong>Associative</strong> containers implement an associative array which is composed of key+value bindings (pairs) and allows efficiently access the value by the key.<br />
+There are two kind of the associative containers</p>
+<ul>
+	<li><strong>Map</strong></li>
+	<li>and <strong>Set</strong><br />
+is a sort of associative container in which the stored values themselves are keys.</li>
+</ul>
+<p><em>Multi</em> associative container is the container which allows to store multiple values with the same key. Both the map and set containes have <em>Multi</em> associative container implementation.</p>
+<p>And there are  two major approaches how to implement the associative array:</p>
+<ul>
+	<li>as a self-balancing binary search tree (<em>Red-Black</em> in particular)</li>
+	<li>and as a bunch of buckets which hold the bindings based on the <em>hash</em> of theirs keys.</li>
+</ul>
+<p><img src="associative.containers.png" alt="" /></p>
+<table style="border-spacing: 1px;">
+	<tr>
+		<th colspan="5">Interface  </th>
+	</tr>
+	<tr>
+		<th rowspan="5">Static     </th>
+		<th>Iterate<br> from     </th>
+		<td style="text-align:right;">[Const::][Reverse::]Iterator<br />
+                                                                                                   </td>
+		<td style="text-align:left;">[c][r]begin()<br />
+                                                                                                       [c][r]end()                </td>
+		<td rowspan="2">[const] </td>
+	</tr>
+	<tr>
+		<th>Access to            </th>
+		<td style="text-align:right;">[Const::]Iterator::Return::Type                     </td>
+		<td style="text-align:left;">front()<br />
+                                                                                                       back()                         </td>
+	</tr>
+	<tr>
+		<th rowspan="3">Look up by a key   </th>
+		<td style="text-align:right;">UInt                                                </td>
+		<td style="text-align:left;">count(const Key &amp;)             </td>
+		<td> const      </td>
+	</tr>
+	<tr>
+		<td style="text-align:right;" rowspan="2">[Const::]Iterator                                  </td>
+		<td style="text-align:left;">find(const Key &amp;)              </td>
+		<td rowspan="2">[const] </td>
+	</tr>
+	<tr>
+		<td style="text-align:left;">equalRange(const Key &amp;)        </td>
+	</tr>
+	<tr>
+		<th rowspan="7">Dynamic    </th>
+		<th style="text-align:center;" colspan="3">Where to insert                                                           </th>
+		<th style="text-align:center;">What to insert                </th>
+	</tr>
+	<tr>
+		<th style="text-align:center;">By a hint           </th>
+		<td style="text-align:right;">[Const::][Reverse::]Iterator (<em>in case of Multi::</em>) &#124<br />
+                                           Insert::Result&lt;[Const::][Reverse::]Iterator&gt;            </td>
+		<td style="text-align:left;">insert([const [Const::][Reverse::]Iterator &amp;hint,]<br />
+                                                                                                   </td>
+		<td style="text-align:left;">Type &amp;&amp; &#124 const Type &amp; &#124 Type &amp; &#124<br />
+                                                                                                       UInt count, const Type &amp; &#124 const Range/Contaner &amp; &#124<br />
+                                                                                                       const RangeIterator &amp;first, const RangeIterator &amp;last) </td>
+	</tr>
+	<tr>
+		<th style="text-align:center;">By a key (<em>map only</em>)</th>
+		<td style="text-align:right;">Type &amp; </td>
+		<td style="text-align:left;">operator[](const Key &amp;) </td>
+		<td> (inserts <em>new Type()</em>) </td>
+	</tr>
+	<tr>
+		<th style="text-align:center;" colspan="3">Were to erase                                                             </th>
+		<th style="text-align:center;">What to erase </th>
+	</tr>
+	<tr>
+		<th style="text-align:center;">At position/range    </th>
+		<td style="text-align:right;">Void </td>
+		<td style="text-align:left;">erase(                  </td>
+		<td>const [Const::][Reverse::]Iterator &amp;[, const [Const::][Reverse::]Iterator &amp;]&#124<br />
+                                                                                                       const Range &amp;) </td>
+	</tr>
+	<tr>
+		<th style="text-align:center;">By a key          </th>
+		<td style="text-align:right;">UInt </td>
+		<td style="text-align:left;">erase(                  </td>
+		<td>  const Key &amp;)     </td>
+	</tr>
+	<tr>
+		<th style="text-align:center;">Entirely          </th>
+		<td style="text-align:right;">Void </td>
+		<td style="text-align:left;">clear()                 </td>
+	</tr>
+</table>
+<p>There are several implementations of the associative array container:</p>
+<ul>
+	<li><strong>Binary::Search::[RB::]Tree</strong><br />
+An implementation of the simple and self-balancing (<em>Red-Black</em>) <em>Binary Search Tree</em>. <em>RB <span class="caps">BST</span></em> implementation is a base of following containers:
+	<ul>
+		<li><strong>[Multi::]Set</strong><br />
+The same as the std::[multi]set</li>
+		<li><strong>[Multi::]Map</strong><br />
+The same as the std::[multi]map</li>
+	</ul></li>
+	<li><strong>Hash::Chaining::Table</strong><br />
+An implementation of the <em>Chaining Hash Table</em> which is a base of following containers:
+	<ul>
+		<li><strong>Unordered::[Multi::]Set</strong><br />
+The same as the std::unordered_[multi]set</li>
+		<li><strong>Unordered::[Multi::]Map</strong><br />
+The same as the std::unordered_[multi]map</li>
+	</ul></li>
+</ul>
+<h2>Extended member map</h2>
+<table style="border-spacing: 1px;">
+	<tr>
+		<th colspan="4" rowspan="3">Operations </th>
+		<th rowspan="3">Binary::<br>Search::<br>Tree </th>
+		<th rowspan="3">Binary::<br>Search::<br>RB::Tree  </th>
+		<th colspan="4"><em>(until C++11)</em>           </th>
+		<th rowspan="3">Hash::<br>Chaining::<br>Table </th>
+		<th colspan="4">Unordered:: </th>
+	</tr>
+	<tr>
+		<th colspan="2"></th>
+		<th colspan="2">Multi::                                       </th>
+		<th colspan="2"></th>
+		<th colspan="2">Multi::    </th>
+	</tr>
+	<tr>
+		<th>Set </th>
+		<th>Map </th>
+		<th>Set </th>
+		<th>Map                                     </th>
+		<th>Set </th>
+		<th>Map </th>
+		<th>Set </th>
+		<th>Map  </th>
+	</tr>
+	<tr>
+		<th style="text-align:right;" rowspan="42">Static </th>
+		<th style="text-align:left;" rowspan="6">Types<br />
+                                  </th>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Type                                                                                                           </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Key                                                                                                            </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Iterator                                                                                                       </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Reverse::Iterator                                                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Const::Iterator                                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">typename </td>
+		<td style="text-align:left;">Const::Reverse::Iterator                                                                                       </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" rowspan="12">Iteration<br />
+                                  </th>
+		<td style="text-align:right;">Iterator </td>
+		<td style="text-align:left;">begin()                                                                                       </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Iterator </td>
+		<td style="text-align:left;">end  ()                                                                                       </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">begin() const                                                                                 </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">end  () const                                                                                 </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">cbegin() const                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">cend  () const                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Reverse::Iterator </td>
+		<td style="text-align:left;">rbegin()                                                                                      </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Reverse::Iterator </td>
+		<td style="text-align:left;">rend  ()                                                                                      </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Reverse::Iterator </td>
+		<td style="text-align:left;">rbegin() const                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Reverse::Iterator </td>
+		<td style="text-align:left;">rend  () const                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Reverse::Iterator </td>
+		<td style="text-align:left;">crbegin() const                                                                               </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Reverse::Iterator </td>
+		<td style="text-align:left;">crend  () const                                                                               </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" rowspan="2">Capacity<br />
+                                  </th>
+		<td style="text-align:right;">UInt </td>
+		<td style="text-align:left;">size() const                                                                                  </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Bool </td>
+		<td style="text-align:left;">empty() const                                                                                 </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th style="text-align:left;" rowspan="8">Element<br />
+                        access<br />
+                                  </th>
+		<td style="text-align:right;">Iterator::Return::Type </td>
+		<td style="text-align:left;">front()                                                                                   </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator::Return::Type </td>
+		<td style="text-align:left;">front() const                                                                             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Iterator::Return::Type </td>
+		<td style="text-align:left;">back()                                                                                    </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator::Return::Type </td>
+		<td style="text-align:left;">back() const                                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Iterator </td>
+		<td style="text-align:left;">find(const Key &amp;)                                                                         </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">find(const Key &amp;) const                                                                   </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Iterator </td>
+		<td style="text-align:left;">equalRange(const Key &amp;)                                                                   </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Const::Iterator </td>
+		<td style="text-align:left;">equalRange(const Key &amp;) const                                                             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th style="text-align:left;">Counting    </th>
+		<td style="text-align:right;">UInt </td>
+		<td style="text-align:left;">count(const Key &amp;) const                                                                  </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th rowspan="5">Comparison<br />
+                                  </th>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator == (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator != (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename Range&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">equal(const Range &amp;range) const                                                             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lt;typename How,<br />
+                                                typename Range&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">equal(const Range &amp;range, const How &amp;how = How()) const                                     </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lt;typename How,<br />
+                                                typename Iterator&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">equal(const Iterator &amp;begin, const Iterator &amp;end, const How &amp;how = How()) const             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th rowspan="8">Relational<br />
+                                  </th>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Int  </td>
+		<td style="text-align:left;vertical-align:bottom;">operator &#8211; (const U &amp;u) const                                                               </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator &gt;  (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator &gt;= (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator &lt;  (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename U&gt;<br />
+                                      Bool </td>
+		<td style="text-align:left;vertical-align:bottom;">operator &lt;= (const U &amp;u) const                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename Range&gt;<br />
+                                      Int  </td>
+		<td style="text-align:left;vertical-align:bottom;">different(const Range &amp;range) const                                                         </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lt;typename How,<br />
+                                                typename Range&gt;<br />
+                                      Int  </td>
+		<td style="text-align:left;vertical-align:bottom;">different(const Range &amp;range, const How &amp;how = How()) const                                 </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lt;typename How,<br />
+                                                typename Iterator&gt;<br />
+                                      Int  </td>
+		<td style="text-align:left;vertical-align:bottom;">different(const Iterator &amp;begin, const Iterator &amp;end, const How &amp;how = How()) const         </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th rowspan="40">Dynamic  </th>
+		<th style="text-align:left;">Capacity     </th>
+		<td style="text-align:right;">UInt </td>
+		<td style="text-align:left;">maxSize() const                                                                                                    </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<th rowspan="37">Modifiers<br />
+                                  </th>
+		<td style="text-align:right;">T &amp;      </td>
+		<td style="text-align:left;">operator[](const Key &amp;key)                                                                                     </td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T &amp;      </td>
+		<td style="text-align:left;">operator[](Key &amp;&amp;key)                                                                                          </td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T &amp;      </td>
+		<td style="text-align:left;">at(const Key &amp;key)                                                                                             </td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T &amp;      </td>
+		<td style="text-align:left;">at(Key &amp;&amp;key)                                                                                                  </td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">T &amp;      </td>
+		<td style="text-align:left;">at(Key &amp;&amp;key)                                                                                                  </td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+		<td class="yes"></td>
+		<td class="no"></td>
+		<td class="no"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Not::Multi::Insert::Interface &amp; </td>
+		<td style="text-align:left;">Unique()                                                                          </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">const Not::Multi::Insert::Interface &amp; </td>
+		<td style="text-align:left;">Unique() const                                                                    </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(Type &amp;&amp;value)                                             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(const Type &amp;value)                                        </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(Type &amp;value)                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename Iterator&gt;<br />
+                                      Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(const Iterator &amp;hint, Type &amp;&amp;value)                       </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename Iterator&gt;<br />
+                                      Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(const Iterator &amp;hint, const Type &amp;value)                  </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template &lttypename Iterator&gt;<br />
+                                      Insert::Result&ltIterator&gt; &#124<br />
+                                      Iterator <em>(in case of Multi::)</em> </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(const Iterator &amp;hint, Type &amp;value)                        </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template <typename Range><br />
+                                      Void     </td>
+		<td style="text-align:left;vertical-align:bottom;">insert(const Range &amp;range)                                                              </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">template <typename RangeIterator><br />
+                                      Void     </td>
+		<td style="text-align:left;">insert(const RangeIterator &amp;first, const RangeIterator &amp;last)                                                  </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void     </td>
+		<td style="text-align:left;">insert(const <span class="caps">LWF</span>::Initializer::List<Type> &amp;list)                                                               </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void     </td>
+		<td style="text-align:left;">erase(const Key &amp;key)                                                                                          </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void     </td>
+		<td style="text-align:left;">erase(const Iterator &amp;iterator)                                                                                </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void     </td>
+		<td style="text-align:left;">erase(const Iterator &amp;first, const Iterator&amp; last)                                                             </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+	<tr>
+		<td style="text-align:right;">Void </td>
+		<td style="text-align:left;">swap(Container &amp;container)                                                                                     </td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+		<td class="yes"></td>
+	</tr>
+</table>
+
+</body>
+</html>
