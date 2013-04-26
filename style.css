@@ -1,0 +1,141 @@
+
+/* Margins */
+
+table, pre {
+  margin: 10px;
+}
+
+h2 {
+margin-top: 15px;
+}
+
+/* Padding */
+
+pre {
+  padding: 10px;
+}
+
+th, tr {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+th {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+td {
+  padding-left: 15px;
+  padding-right: 10px;
+}
+
+body {
+  padding: 30px;
+}
+
+/* Borders*/
+
+table, pre {
+  border: 1px  solid #E6E6E6;
+  border-collapse: separate;
+}
+
+table {
+  border-spacing: 0;
+}
+
+
+/* round corners */
+
+table, pre {
+  border-radius:          7px;
+  -webkit-border-radius:  7px;
+  -moz-border-radius:     7px;
+}
+
+/* Colors */
+
+pre, odd {
+  background: #F6F6F6;
+}
+
+thead, th {
+  background-color: #E1E1E1;
+}
+
+tbody, even {
+   background-color: white;
+}
+
+.yes {
+  background-color: #B0FFB0;
+}
+.no {
+  background-color: #FFB0B0;
+}
+.base {
+  background-color: #B0B0FF;
+}
+
+/* Fonts */
+
+body {
+  font: normal 13px/1.2 Verdana;
+}
+
+th {
+  /*font: bolder 12px/1.2 Arial;*/
+  font: 650 12px/1.2 Arial;
+}
+
+pre {
+  font-size: 11px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: Arial;
+  font-weight: 700;
+  line-height:1.2;
+}
+h2 {
+font-size: 16px;
+}
+h3 {
+font-size: 14px;
+}
+
+/* Reference */
+a {
+  text-decoration: none;
+}
+
+/* Alignment */
+th {
+  vertical-align: middle;
+}
+
+ul.content {
+  text-align: left;
+  list-style: none;
+  padding-left:15px;
+}
+
+div.content {
+  color:white;
+  background:silver;
+  margin: 5px 0px;
+  padding:0px 10px;
+}
+
+a.include {
+  float: right;
+  width: 500px;
+  text-align: left;
+}
+
+/* Orientation */
+
+span.vertical {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+}
+
